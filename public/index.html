@@ -12,12 +12,14 @@
 
   </table>
   <script>
-    playfield = (document.getElementsByTagName("table"))[0]
-    
-    function  makeRow(width)  {
-      tr =  document.createElement("tr")
+    function inRange(begin, end, value) {
+      return begin <= value && value < end
+    }
 
-      for (cell = 0; cell < width; cell++)  {
+    function makeRow(width) {
+      var tr = document.createElement("tr")
+
+      for (var cell = 0; cell < width; cell++)  {
         td = document.createElement("td")
         td.innerText  = "."
         tr.appendChild(td)
@@ -26,31 +28,49 @@
       return tr
     }
 
-    function resizePlayfield(width,height)  {
-      playfield.innerHTML = ''
+    class Playfield {
+      constructor(doc, width, height) {
+        this.element = doc.getElementsByTagName("table")[0]
+        this.resize(width, height)
+      }
 
-      for (row = 0; row < height; row++) {
-        playfield.appendChild(makeRow(width))
+      resize(width, height)  {
+        this.width   = width
+        this.height  = height
+
+        this.element.innerHTML = ''
+
+        for (var row = 0; row < height; row++) {
+          this.element.appendChild(makeRow(width))
+        }
+      }
+
+      draw(x, y, str) {
+        if (inRange(0, this.width, x) && inRange(0, this.height, y)) {
+          this.element.rows[y].cells[x].innerText = str
+        }
       }
     }
 
-    resizePlayfield(10,  10)
-
+    playfield = new Playfield(document, 10, 10)
+    
     class Player {
-      constructor() {
+      constructor(playfield) {
         this.x = this.y = 0
+        this.playfield = playfield
       }
 
-      draw(playfield) {
-        if (this.x < 0 || this.x >= playfield.children.length) {
-          return
-        }
+      draw(str) {
+        this.playfield.draw(this.x, this.y, str)
+      }
 
-        if (this.y < 0 || this.y >= playfield.rows[0].children.length) {
-          return
-        }
+      move(dx, dy) {
+        this.draw("")
 
-        playfield.rows[this.y].cells[this.x].innerText = "@"
+        this.x += dx
+        this.y += dy
+
+        this.draw("@")
       }
     }
 
