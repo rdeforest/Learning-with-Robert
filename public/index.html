@@ -36,6 +36,23 @@
 
     resizePlayfield(10,  10)
 
+    class Player {
+      constructor() {
+        this.x = this.y = 0
+      }
+
+      draw(playfield) {
+        if (this.x < 0 || this.x >= playfield.children.length) {
+          return
+        }
+
+        if (this.y < 0 || this.y >= playfield.rows[0].children.length) {
+          return
+        }
+
+        playfield.rows[this.y].cells[this.x].innerText = "@"
+      }
+    }
 
   </script>
 </body>
