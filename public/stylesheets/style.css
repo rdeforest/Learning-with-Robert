@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+td {
+  border: 2px solid black;
+  width:  1em;
+}
