@@ -8,6 +8,10 @@ a {
 }
 
 td {
-  border: 2px solid black;
-  width:  1em;
+  border:     2px solid black;
+  width:      1em;
+  text-align: center;
+
+  background-color: rgb(94, 135, 32);
+  color: greenyellow;
 }

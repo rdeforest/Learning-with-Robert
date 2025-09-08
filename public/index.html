@@ -8,9 +8,16 @@
 <body>
   <h1>Express</h1>
   <p>Welcome to Express</p>
-  <table> 
-
+  <table id="playfield"> 
   </table>
+
+  <br/>
+
+  <table id="buttons">
+    <tr> <td          >    </td> <td id="up"  >^</td> <td           >    </td> </tr>
+    <tr> <td id="left">&lt;</td> <td id="down">v</td> <td id="right">&gt;</td> </tr>
+  </table>
+
   <script>
     function inRange(begin, end, value) {
       return begin <= value && value < end
@@ -80,11 +87,29 @@
 
         this.draw()
       }
+
+      buttonClicked(direction) {
+        ({
+          up    : () => { this.move( 0, -1) },
+          left  : () => { this.move(-1,  0) },
+          down  : () => { this.move( 0,  1) },
+          right : () => { this.move( 1,  0) }
+        })[direction]()
+      }
     }
 
     playfield = new Playfield(document, 10, 10)
     playerOne = new Player(playfield)
     playerOne.move(4, 4)
+    var button
+
+    for (var action of ["up", "left", "down", "right"]) {
+      if (button = document.getElementById(action)) {
+        button.setAttribute('onclick', "playerOne.buttonClicked(\""+action+"\")")
+      } else {
+        console.warn("Input button not found: " + action)
+      }
+    }
 
   </script>
 </body>
