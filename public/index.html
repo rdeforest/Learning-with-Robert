@@ -9,39 +9,35 @@
   <h1>Express</h1>
   <p>Welcome to Express</p>
   <table> 
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-    </tr>
-
 
   </table>
+  <script>
+    playfield = (document.getElementsByTagName("table"))[0]
+    
+    function  makeRow(width)  {
+      tr =  document.createElement("tr")
+
+      for (cell = 0; cell < width; cell++)  {
+        td = document.createElement("td")
+        td.innerText  = "."
+        tr.appendChild(td)
+      }
+      
+      return tr
+    }
+
+    function resizePlayfield(width,height)  {
+      playfield.innerHTML = ''
+
+      for (row = 0; row < height; row++) {
+        playfield.appendChild(makeRow(width))
+      }
+    }
+
+    resizePlayfield(10,  10)
+
+
+  </script>
 </body>
 
 </html>
